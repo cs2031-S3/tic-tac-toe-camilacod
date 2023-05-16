@@ -76,8 +76,12 @@ def insert_player(data):
     db.session.commit()
     return "SUCCESS"
 
-def update_player():
-    return 'TODO'
+def update_player(data):
+    player = Player.query.get_or_404(data["id"])
+    player.username = data["username"]
+    player.password = data["password"]
+    db.session.commit()
+    return "SUCCESS"
 
 def delete_player(player_id):
     player = Player.query.get_or_404(player_id)
