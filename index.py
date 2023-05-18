@@ -40,18 +40,48 @@ def signup_menu():
 def login_menu():
     return render_template('login.html')
 
-@app.route('/players', methods=['GET'])
-def route_get_players():
-    return get_players()
+# @app.route('/players', methods=['GET'])
+# def route_get_players():
+#     return get_players()
 
+@app.route('/players', methods=['GET','POST'])
+def route_players():
+    if request.method == 'GET':
+        players = Player.query.all()
+        return jsonify(players)
+    elif request.method == 'POST':
+        data = request.get_json()
+        player = Player(username=data["username"], password=data["password"])
+        db.session.add(player)
+        db.session.commit()
+        return "SUCCESS"
+    
+@app.route('/players/<player_id>', methods=['GET','PUT','DELETE'])
+def route_player_id(player_id):
+    if request.method == 'GET':
+        #player = Player.query.get_or_404(player_id)
+        return get_player_by_id(player_id)
+    elif request.method == 'PUT':
+        data = request.get_json() 
+        player = Player.query.get_or_404(data["id"])
+        player.username = data["username"]
+        player.password = data["password"]
+        db.session.commit()
+        return "SUCCESS"
+    elif request.method == 'DELETE':
+        player = Player.query.get_or_404(player_id)
+        db.session.delete(player)
+        db.session.commit()
+        return "SUCCESS"
+    
 @app.route('/players/<player_id>', methods=['GET'])
 def route_get_player(player_id):
     return get_player_by_id(player_id)
 
-@app.route('/players/add',  methods = ['POST'])
-def route_add_player():
-    player = request.get_json()
-    return insert_player(player)
+# @app.route('/players/add',  methods = ['POST'])
+# def route_add_player():
+#     player = request.get_json()
+#     return insert_player(player)
 
 @app.route('/players/update',  methods = ['PUT'])
 def route_update_player():
