@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <script src="/list_script"></script> <!-- accede a la ruta, lo solicita y se envia de regreso al cliente -->
+    </head>
+    <body>
+        <h1>Player List</h1>
+
+        <table id="player_table"> <!--headers de table-->
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+                <tr><!-- headers-->
+                    <td> <input type="text" id="username"> </td> <!-- id único para identificar la casilla, name identificador del contenido-->
+                    <td> <input type="password" id="password"> </td>
+                    <td> <button type="button" onclick=createPlayer()> create </td>
+                </tr>
+            </thead>
+            <tbody> <!--Box que se puede ingresar datos, un js debe poder leerlo y mandarlo al servidor, add player: convertir a js, mandarlo al servidor y mandarlo a la base de datos-->
+            
+            </tbody>
+        </table>
+    </body>
+</html>
